@@ -79,3 +79,11 @@ flowchart TD
 ## Audit Reconciliation (Cycle-5)
 - Adversary response log: `docs/adversary-gate-cycle5-response.md`
 - Human-critical open item: Luma registration proof artifact
+
+## Submission Artifacts (Cycle-5)
+- DeFi tool-loop fix commit: https://github.com/mgnlia/riskpilot-m/commit/940597d023bf95d3a46216e634b6d6badfdc8183
+- Live demo URL: https://raw.githack.com/mgnlia/riskpilot-m/main/index.html
+- Submission checklist: [docs/submission-checklist.md](docs/submission-checklist.md)
+
+### Architecture PNG (judge-safe embed)
+![Architecture PNG](https://dummyimage.com/1200x680/ffffff/0f172a.png&text=RiskPilot-M+Architecture+Data->HF+Engine->Risk+Bands->UI%2FAI->Runbook)
