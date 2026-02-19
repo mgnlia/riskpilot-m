@@ -1,0 +1,20 @@
+[
+  {
+    "wallet": "0xA1...b9",
+    "collateral_usd": 12500,
+    "debt_usd": 9800,
+    "liquidation_threshold": 0.82
+  },
+  {
+    "wallet": "0xC3...f2",
+    "collateral_usd": 4200,
+    "debt_usd": 3900,
+    "liquidation_threshold": 0.8
+  },
+  {
+    "wallet": "0x77...9d",
+    "collateral_usd": 9000,
+    "debt_usd": 3000,
+    "liquidation_threshold": 0.78
+  }
+]

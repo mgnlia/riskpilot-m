@@ -9,6 +9,8 @@ from typing import Any
 from dotenv import load_dotenv
 from mistralai import Mistral
 
+from riskpilot_m.health_factor import evaluate_position, load_mock_positions
+
 SYSTEM_PROMPT = (
     "You are RiskPilot-M, a concise risk analysis copilot. "
     "Given an objective, identify top execution risks and mitigations."
@@ -80,6 +82,16 @@ def _extract_content(message: Any) -> str:
     return str(content)
 
 
+def run_health_demo() -> None:
+    print("RiskPilot-M D-7: health factor scoring demo (mock on-chain data)\n")
+    positions = load_mock_positions("data/mock_positions.json")
+    print(f"{'wallet':<12} {'HF':>6} {'risk':>10}  next_action")
+    print("-" * 70)
+    for p in positions:
+        r = evaluate_position(p)
+        print(f"{r.wallet:<12} {r.health_factor:>6.2f} {r.risk_band:>10}  {r.next_action}")
+
+
 def run_basic(client: Mistral, model: str) -> None:
     user_prompt = (
         "We are entering a 48-hour critical registration window for a hackathon. "
@@ -123,7 +135,6 @@ def run_tool_loop(client: Mistral, model: str) -> None:
             print(_extract_content(message))
             return
 
-        # keep assistant message in context
         messages.append(
             {
                 "role": "assistant",
@@ -163,21 +174,26 @@ def run_tool_loop(client: Mistral, model: str) -> None:
     print("Tool loop ended after max iterations without final assistant response.")
 
 
-def run() -> None:
-    parser = argparse.ArgumentParser(description="RiskPilot-M baseline runner")
-    parser.add_argument("--mode", choices=["basic", "tool-loop"], default="basic")
-    args = parser.parse_args()
-
+def _build_client_or_exit() -> tuple[Mistral, str]:
     load_dotenv()
     api_key = os.getenv("MISTRAL_API_KEY")
     model = os.getenv("MISTRAL_MODEL", "mistral-small-latest")
-
     if not api_key:
         print("ERROR: MISTRAL_API_KEY is not set. Add it to .env or environment.")
         sys.exit(1)
+    return Mistral(api_key=api_key), model
 
-    client = Mistral(api_key=api_key)
 
+def run() -> None:
+    parser = argparse.ArgumentParser(description="RiskPilot-M baseline runner")
+    parser.add_argument("--mode", choices=["basic", "tool-loop", "health-demo"], default="basic")
+    args = parser.parse_args()
+
+    if args.mode == "health-demo":
+        run_health_demo()
+        return
+
+    client, model = _build_client_or_exit()
     if args.mode == "tool-loop":
         run_tool_loop(client, model)
     else:
