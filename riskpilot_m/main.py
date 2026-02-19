@@ -9,6 +9,7 @@ from typing import Any
 from dotenv import load_dotenv
 from mistralai import Mistral
 
+from riskpilot_m.demo_cli import run_demo_cli
 from riskpilot_m.health_factor import evaluate_position, load_mock_positions
 
 SYSTEM_PROMPT = (
@@ -186,11 +187,15 @@ def _build_client_or_exit() -> tuple[Mistral, str]:
 
 def run() -> None:
     parser = argparse.ArgumentParser(description="RiskPilot-M baseline runner")
-    parser.add_argument("--mode", choices=["basic", "tool-loop", "health-demo"], default="basic")
+    parser.add_argument("--mode", choices=["basic", "tool-loop", "health-demo", "demo-ui"], default="basic")
     args = parser.parse_args()
 
     if args.mode == "health-demo":
         run_health_demo()
+        return
+
+    if args.mode == "demo-ui":
+        run_demo_cli()
         return
 
     client, model = _build_client_or_exit()
