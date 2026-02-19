@@ -1,4 +1,4 @@
-# Submission Checklist (Cycle-6)
+# Submission Checklist (Cycle-8)
 
 - [x] DeFi-specific tool loop (judge-facing narrative aligned)
   - Evidence commit: https://github.com/mgnlia/riskpilot-m/commit/940597d023bf95d3a46216e634b6d6badfdc8183
@@ -13,8 +13,16 @@
   - Evidence commit: https://github.com/mgnlia/riskpilot-m/commit/7b45dc9135e421408d9f70fc31fe4d5b2497d162
 - [x] D-4 writeup + architecture docs
   - Evidence commit: https://github.com/mgnlia/riskpilot-m/commit/7b45dc9135e421408d9f70fc31fe4d5b2497d162
-- [x] Mock data expanded (8 wallets) for stronger demo realism
+- [x] Mock data expanded (8 wallets) — Python backend
   - File: `data/mock_positions.json`
-- [ ] Registration approval proof (human-only)
+- [x] index.html synced to all 8 wallets (was stale at 3 — fixed cycle-8)
+  - Evidence commit: https://github.com/mgnlia/riskpilot-m/commit/97369f9814d68fafc889691402cb33b199b5e394
+- [ ] Stable deployment URL (GitHub Pages — human must enable in repo Settings → Pages → main branch / root)
+  - Once enabled, URL will be: https://mgnlia.github.io/riskpilot-m/
+  - Fallback currently active: https://raw.githack.com/mgnlia/riskpilot-m/main/index.html
+- [ ] Registration approval proof (HUMAN-ONLY — CRITICAL)
   - Required: screenshot/URL from Luma request-to-join + wallet verification
+  - Luma URL: https://luma.com/mistralhack-online
+  - Deadline: submit by Feb 20 EOD (confirmation sent ~1 week before Feb 28 event)
 - [ ] Demo video URL in README (human-only recording/upload)
+- [ ] Submission portal format confirmed (after Feb 25 briefing — assign owner)
