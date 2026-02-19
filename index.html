@@ -44,16 +44,16 @@
   </div>
 
   <script>
-    // Synced with data/mock_positions.json (8 wallets)
+    // Synced with data/mock_positions.json — all 8 wallets (adversary gate cycle-8 fix)
     const positions = [
-      { wallet: '0xA1...b9', collateral_usd: 12500, debt_usd: 9800, liquidation_threshold: 0.82 },
-      { wallet: '0xC3...f2', collateral_usd: 4200, debt_usd: 3900, liquidation_threshold: 0.80 },
-      { wallet: '0x77...9d', collateral_usd: 9000, debt_usd: 3000, liquidation_threshold: 0.78 },
+      { wallet: '0xA1...b9', collateral_usd: 12500, debt_usd: 9800,  liquidation_threshold: 0.82 },
+      { wallet: '0xC3...f2', collateral_usd: 4200,  debt_usd: 3900,  liquidation_threshold: 0.80 },
+      { wallet: '0x77...9d', collateral_usd: 9000,  debt_usd: 3000,  liquidation_threshold: 0.78 },
       { wallet: '0xD4...aa', collateral_usd: 15000, debt_usd: 11000, liquidation_threshold: 0.80 },
-      { wallet: '0xE5...1c', collateral_usd: 3200, debt_usd: 2950, liquidation_threshold: 0.79 },
-      { wallet: '0xF6...be', collateral_usd: 21000, debt_usd: 7600, liquidation_threshold: 0.77 },
-      { wallet: '0x9A...44', collateral_usd: 6800, debt_usd: 5100, liquidation_threshold: 0.81 },
-      { wallet: '0x12...ef', collateral_usd: 4800, debt_usd: 4700, liquidation_threshold: 0.80 }
+      { wallet: '0xE5...1c', collateral_usd: 3200,  debt_usd: 2950,  liquidation_threshold: 0.79 },
+      { wallet: '0xF6...be', collateral_usd: 21000, debt_usd: 7600,  liquidation_threshold: 0.77 },
+      { wallet: '0x9A...44', collateral_usd: 6800,  debt_usd: 5100,  liquidation_threshold: 0.81 },
+      { wallet: '0x12...ef', collateral_usd: 4800,  debt_usd: 4700,  liquidation_threshold: 0.80 }
     ];
 
     const hf = (c, d, t) => d <= 0 ? 999 : (c * t) / d;
@@ -70,7 +70,7 @@
       const health_factor = hf(p.collateral_usd, p.debt_usd, p.liquidation_threshold);
       const risk_band = band(health_factor);
       return { ...p, health_factor, risk_band, next_action: action(risk_band) };
-    }).sort((a,b) => a.health_factor - b.health_factor);
+    }).sort((a, b) => a.health_factor - b.health_factor);
 
     scored.forEach(p => {
       const tr = document.createElement('tr');
