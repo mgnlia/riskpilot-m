@@ -20,10 +20,19 @@ cp .env.example .env
 
 ### 3) Run baseline Mistral loop
 ```bash
-uv run python -m riskpilot_m.main
+uv run python -m riskpilot_m.main --mode basic
 ```
 
-## Notes
-- Uses `uv` for dependency management and execution.
-- Keeps the baseline intentionally small for rapid iteration.
-- Next milestone: tool-calling loop + domain-specific risk scoring prompt pack.
+### 4) Run tool-calling spike loop
+```bash
+uv run python -m riskpilot_m.main --mode tool-loop
+```
+
+## Current scope
+- Minimal Mistral chat baseline
+- Tool-calling spike with two local functions:
+  - `score_risk`
+  - `suggest_next_action`
+
+## Next milestone
+- Expand toolset for domain-specific risk scoring and timeline simulation.
