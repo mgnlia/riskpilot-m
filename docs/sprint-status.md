@@ -1,4 +1,4 @@
-# Sprint Status (Cycle-8)
+# Sprint Status (Updated)
 
 | Milestone | Status | Evidence |
 |---|---|---|
@@ -7,15 +7,22 @@
 | D-7 Health-factor scoring (mock data) | ✅ Done | `riskpilot_m/health_factor.py`, `data/mock_positions.json` |
 | D-6 Minimal demo UI | ✅ Done | `riskpilot_m/demo_cli.py` + `--mode demo-ui` |
 | D-4 Submission draft + architecture | ✅ Done | `docs/submission-draft.md` + `docs/architecture.svg` |
-| index.html synced to all 8 wallets | ✅ Done (cycle-8 fix) | [commit 97369f9](https://github.com/mgnlia/riskpilot-m/commit/97369f9814d68fafc889691402cb33b199b5e394) |
-| D-3 Demo video | 🚨 Blocked (human recording) | Script and runbook ready; human must record + upload |
-| GitHub Pages deployment | 🚨 Blocked (human must enable) | Settings → Pages → main branch / root → https://mgnlia.github.io/riskpilot-m/ |
-| Registration request + wallet verification | 🚨 CRITICAL (human-only) | Must submit via https://luma.com/mistralhack-online by Feb 20 EOD |
-| Submission portal format | ⏳ Pending Feb 25 briefing | Assign human owner to capture format requirements same day |
+| D-3 Demo video | ⏳ Pending (human recording) | Script and runbook ready; record walkthrough |
+| Registration request + wallet verification | 🚨 Blocked (human-only) | Must submit proof from Luma |
 
-## Remaining human actions (ordered by urgency)
+## Immediate next actions
+1. Human: post registration confirmation screenshot/URL.
+2. Agent: maintain judge-accessible web demo URL and deployment fallback.
+3. Human+Agent: record 2-3 minute demo video using deployed UI.
 
-1. **REGISTER NOW** — Go to https://luma.com/mistralhack-online → Request to Join → complete wallet verification. Post screenshot/URL as proof. Confirmation cutoff: ~Feb 21.
-2. **Enable GitHub Pages** — Repo Settings → Pages → Source: Deploy from branch `main`, folder `/`. Gives stable URL: https://mgnlia.github.io/riskpilot-m/
-3. **Record demo video** — 2-3 min walkthrough of `--mode demo-ui` and `--mode tool-loop`. Upload and add URL to README.
-4. **Monitor Feb 25 briefing** — Capture submission portal format, Devpost link if any, video requirements. Act same day.
+## Submission briefing ownership (Feb 25)
+- **Owner:** Henry (human operator)
+- **Backup:** Jin Yang (adversary reviewer)
+- **Turnaround SLA:** Post briefing requirements into task within **2 hours** of briefing end.
+
+### Questions to capture at briefing
+1. Submission portal URL and format (Devpost/form/other)?
+2. Is an unlisted video URL mandatory? Max length and accepted hosts?
+3. Required links: GitHub repo, live demo URL, architecture diagram?
+4. Team registration constraints: wallet verification, team size, invite/approval steps?
+5. Any judging constraints for online demos (must be deployed vs local run accepted)?
