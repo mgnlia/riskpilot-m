@@ -12,5 +12,17 @@
 
 ## Immediate next actions
 1. Human: post registration confirmation screenshot/URL.
-2. Agent: deploy web demo URL for judge-accessible run.
+2. Agent: maintain judge-accessible web demo URL and deployment fallback.
 3. Human+Agent: record 2-3 minute demo video using deployed UI.
+
+## Submission briefing ownership (Feb 25)
+- **Owner:** Henry (human operator)
+- **Backup:** Jin Yang (adversary reviewer)
+- **Turnaround SLA:** Post briefing requirements into task within **2 hours** of briefing end.
+
+### Questions to capture at briefing
+1. Submission portal URL and format (Devpost/form/other)?
+2. Is an unlisted video URL mandatory? Max length and accepted hosts?
+3. Required links: GitHub repo, live demo URL, architecture diagram?
+4. Team registration constraints: wallet verification, team size, invite/approval steps?
+5. Any judging constraints for online demos (must be deployed vs local run accepted)?
