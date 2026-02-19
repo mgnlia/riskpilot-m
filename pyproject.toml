@@ -1,0 +1,17 @@
+[project]
+name = "riskpilot-m"
+version = "0.1.0"
+description = "RiskPilot-M scaffold for Mistral AI Worldwide Hackathon 2026"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "mistralai>=1.2.0",
+  "python-dotenv>=1.0.1",
+]
+
+[project.scripts]
+riskpilot-m = "riskpilot_m.main:run"
+
+[build-system]
+requires = ["hatchling>=1.24.0"]
+build-backend = "hatchling.build"
