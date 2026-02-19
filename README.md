@@ -2,6 +2,10 @@
 
 Baseline scaffold for the Mistral AI Worldwide Hackathon 2026.
 
+## Live Demo (Web)
+- Deploy target: Vercel static page (`index.html`)
+- After deploy, place URL here: `TBD`
+
 ## Objective
 Build a risk-focused agent prototype using Mistral APIs with a runnable local loop before the hackathon start.
 
@@ -23,7 +27,7 @@ cp .env.example .env
 uv run python -m riskpilot_m.main --mode basic
 ```
 
-### 4) Run tool-calling spike loop
+### 4) Run DeFi tool-calling loop
 ```bash
 uv run python -m riskpilot_m.main --mode tool-loop
 ```
@@ -38,7 +42,9 @@ uv run python -m riskpilot_m.main --mode health-demo
 uv run python -m riskpilot_m.main --mode demo-ui
 ```
 
-## Architecture (draft)
+## Architecture Diagram
+![Architecture](docs/architecture.svg)
+
 ```mermaid
 flowchart TD
     A[Mock/On-chain Position Data] --> B[Health Factor Engine]
@@ -51,22 +57,20 @@ flowchart TD
 ```
 
 ## Current scope
-- Minimal Mistral chat baseline
-- Tool-calling spike with two local functions:
+- Minimal Mistral chat baseline (default model: `mistral-large-latest`)
+- DeFi-specific tool-calling loop with local functions:
   - `score_risk`
   - `suggest_next_action`
 - D-7 artifact: health-factor scoring engine over mock on-chain positions
 - D-6 artifact: minimal rich CLI demo UI for risk score + next action
 - D-4 artifact: submission draft in `docs/submission-draft.md`
+- Sprint tracker: `docs/sprint-status.md`
 
 ## Project layout
 - `riskpilot_m/main.py` — CLI entrypoint and Mistral loops
 - `riskpilot_m/health_factor.py` — risk/health scoring logic
 - `riskpilot_m/demo_cli.py` — minimal operator UI in terminal
 - `data/mock_positions.json` — sample position data for demo
-- `docs/strategy-prize-matrix-correction.md` — corrected target prioritization
-- `docs/feb25-briefing-plan.md` — briefing checklist
+- `index.html` — judge-friendly web demo (static)
+- `docs/architecture.svg` — architecture diagram asset
 - `docs/submission-draft.md` — draft final write-up
-
-## Next milestone
-- Connect on-chain adapters and automated alerts.

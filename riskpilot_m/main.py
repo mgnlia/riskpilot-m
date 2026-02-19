@@ -13,8 +13,8 @@ from riskpilot_m.demo_cli import run_demo_cli
 from riskpilot_m.health_factor import evaluate_position, load_mock_positions
 
 SYSTEM_PROMPT = (
-    "You are RiskPilot-M, a concise risk analysis copilot. "
-    "Given an objective, identify top execution risks and mitigations."
+    "You are RiskPilot-M, a DeFi liquidation-risk copilot. "
+    "Given wallet position context, produce concise, operator-ready mitigations."
 )
 
 TOOLS = [
@@ -22,7 +22,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "score_risk",
-            "description": "Return a severity score (1-10) for a risk statement.",
+            "description": "Return a severity score (1-10) for a DeFi liquidation risk statement.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -38,7 +38,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "suggest_next_action",
-            "description": "Return an immediate next action for a given blocker.",
+            "description": "Return immediate DeFi mitigation actions for a risky position.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -60,11 +60,14 @@ def _score_risk(args: dict[str, Any]) -> dict[str, Any]:
 
 
 def _suggest_next_action(args: dict[str, Any]) -> dict[str, Any]:
-    blocker = str(args.get("blocker", "Unknown blocker"))
+    blocker = str(args.get("blocker", "Unknown risk"))
     deadline = int(args.get("deadline_hours", 24))
     return {
         "blocker": blocker,
-        "next_action": f"Assign owner now, execute within {deadline}h, and post proof artifact.",
+        "next_action": (
+            f"Within {deadline}h: (1) repay debt or add collateral, "
+            f"(2) reduce leverage, (3) set liquidation alert thresholds."
+        ),
     }
 
 
@@ -87,7 +90,7 @@ def run_health_demo() -> None:
     print("RiskPilot-M D-7: health factor scoring demo (mock on-chain data)\n")
     positions = load_mock_positions("data/mock_positions.json")
     print(f"{'wallet':<12} {'HF':>6} {'risk':>10}  next_action")
-    print("-" * 70)
+    print("-" * 72)
     for p in positions:
         r = evaluate_position(p)
         print(f"{r.wallet:<12} {r.health_factor:>6.2f} {r.risk_band:>10}  {r.next_action}")
@@ -95,8 +98,8 @@ def run_health_demo() -> None:
 
 def run_basic(client: Mistral, model: str) -> None:
     user_prompt = (
-        "We are entering a 48-hour critical registration window for a hackathon. "
-        "List 5 execution risks and one mitigation for each."
+        "Given a wallet with collateral=$4200, debt=$3900, liquidation_threshold=0.80, "
+        "explain liquidation risk in 3 bullets and include one immediate mitigation."
     )
     response = client.chat.complete(
         model=model,
@@ -110,15 +113,22 @@ def run_basic(client: Mistral, model: str) -> None:
 
 
 def run_tool_loop(client: Mistral, model: str) -> None:
+    # Use the riskiest mock position as the demo scenario.
+    positions = load_mock_positions("data/mock_positions.json")
+    scored = [evaluate_position(p) for p in positions]
+    worst = sorted(scored, key=lambda x: x.health_factor)[0]
+
+    user_content = (
+        "Analyze this DeFi position and produce an operator action plan. "
+        f"Wallet={worst.wallet}, health_factor={worst.health_factor:.2f}, "
+        f"risk_band={worst.risk_band}, current_recommendation='{worst.next_action}'. "
+        "Use tools to: (a) score liquidation severity, (b) propose immediate next action in <=24h, "
+        "then output a concise 4-bullet runbook."
+    )
+
     messages: list[dict[str, Any]] = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {
-            "role": "user",
-            "content": (
-                "Assess this situation: registration requires a wallet verification and deadline is within 48h. "
-                "Use tools to score key risks and propose immediate actions, then summarize in a short action plan."
-            ),
-        },
+        {"role": "user", "content": user_content},
     ]
 
     for _ in range(3):
@@ -178,7 +188,7 @@ def run_tool_loop(client: Mistral, model: str) -> None:
 def _build_client_or_exit() -> tuple[Mistral, str]:
     load_dotenv()
     api_key = os.getenv("MISTRAL_API_KEY")
-    model = os.getenv("MISTRAL_MODEL", "mistral-small-latest")
+    model = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
     if not api_key:
         print("ERROR: MISTRAL_API_KEY is not set. Add it to .env or environment.")
         sys.exit(1)

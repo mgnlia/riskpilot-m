@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskPilot-M Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #f8fafc; color: #0f172a; }
+    h1 { margin-bottom: 6px; }
+    .sub { color: #475569; margin-bottom: 18px; }
+    table { border-collapse: collapse; width: 100%; background: white; }
+    th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+    th { background: #f1f5f9; }
+    .critical { color: #b91c1c; font-weight: bold; }
+    .high { color: #b45309; font-weight: bold; }
+    .medium { color: #7e22ce; font-weight: bold; }
+    .low { color: #166534; font-weight: bold; }
+    .card { margin-top: 16px; padding: 14px; border: 1px solid #e2e8f0; background: white; }
+    code { background: #eef2ff; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>RiskPilot-M — Liquidation Risk Demo</h1>
+  <div class="sub">DeFi health-factor scoring + next-action prioritization (hackathon MVP)</div>
+
+  <table id="tbl">
+    <thead>
+      <tr>
+        <th>Wallet</th>
+        <th>Collateral (USD)</th>
+        <th>Debt (USD)</th>
+        <th>Liq Threshold</th>
+        <th>Health Factor</th>
+        <th>Risk Band</th>
+        <th>Next Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="card" id="priority"></div>
+  <div class="card">
+    Recommended local AI run: <code>uv run python -m riskpilot_m.main --mode tool-loop</code>
+  </div>
+
+  <script>
+    const positions = [
+      { wallet: '0xA1...b9', collateral_usd: 12500, debt_usd: 9800, liquidation_threshold: 0.82 },
+      { wallet: '0xC3...f2', collateral_usd: 4200, debt_usd: 3900, liquidation_threshold: 0.80 },
+      { wallet: '0x77...9d', collateral_usd: 9000, debt_usd: 3000, liquidation_threshold: 0.78 }
+    ];
+
+    const hf = (c, d, t) => d <= 0 ? 999 : (c * t) / d;
+    const band = (h) => h < 1.0 ? 'CRITICAL' : h < 1.2 ? 'HIGH' : h < 1.5 ? 'MEDIUM' : 'LOW';
+    const action = (b) => ({
+      CRITICAL: 'Repay debt or add collateral immediately.',
+      HIGH: 'Reduce leverage now and set rapid alerts.',
+      MEDIUM: 'Prepare top-up collateral and monitor closely.',
+      LOW: 'Maintain with periodic monitoring.'
+    }[b]);
+
+    const tbody = document.querySelector('#tbl tbody');
+    const scored = positions.map(p => {
+      const health_factor = hf(p.collateral_usd, p.debt_usd, p.liquidation_threshold);
+      const risk_band = band(health_factor);
+      return { ...p, health_factor, risk_band, next_action: action(risk_band) };
+    }).sort((a,b) => a.health_factor - b.health_factor);
+
+    scored.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${p.wallet}</td>
+        <td>${p.collateral_usd.toFixed(0)}</td>
+        <td>${p.debt_usd.toFixed(0)}</td>
+        <td>${p.liquidation_threshold.toFixed(2)}</td>
+        <td>${p.health_factor.toFixed(2)}</td>
+        <td class="${p.risk_band.toLowerCase()}">${p.risk_band}</td>
+        <td>${p.next_action}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const top = scored[0];
+    document.getElementById('priority').innerHTML =
+      `<strong>Immediate Priority:</strong> ${top.wallet} (HF ${top.health_factor.toFixed(2)}, ${top.risk_band}) — ${top.next_action}`;
+  </script>
+</body>
+</html>
