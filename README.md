@@ -3,8 +3,8 @@
 Baseline scaffold for the Mistral AI Worldwide Hackathon 2026.
 
 ## Live Demo (Web)
-- Deploy target: Vercel static page (`index.html`)
-- After deploy, place URL here: `TBD`
+- Public URL: https://raw.githack.com/mgnlia/riskpilot-m/main/index.html
+- Notes: static judge-friendly demo (no local setup required)
 
 ## Objective
 Build a risk-focused agent prototype using Mistral APIs with a runnable local loop before the hackathon start.
@@ -64,6 +64,7 @@ flowchart TD
 - D-7 artifact: health-factor scoring engine over mock on-chain positions
 - D-6 artifact: minimal rich CLI demo UI for risk score + next action
 - D-4 artifact: submission draft in `docs/submission-draft.md`
+- D-3 prep: demo video plan in `docs/demo-video-plan.md`
 - Sprint tracker: `docs/sprint-status.md`
 
 ## Project layout
