@@ -75,3 +75,7 @@ flowchart TD
 - `index.html` — judge-friendly web demo (static)
 - `docs/architecture.svg` — architecture diagram asset
 - `docs/submission-draft.md` — draft final write-up
+
+## Audit Reconciliation (Cycle-5)
+- Adversary response log: `docs/adversary-gate-cycle5-response.md`
+- Human-critical open item: Luma registration proof artifact
