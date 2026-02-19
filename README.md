@@ -45,6 +45,9 @@ uv run python -m riskpilot_m.main --mode demo-ui
 ## Architecture Diagram
 ![Architecture](docs/architecture.svg)
 
+### Architecture PNG (rendered from repo SVG)
+![Architecture PNG](https://images.weserv.nl/?url=raw.githubusercontent.com/mgnlia/riskpilot-m/main/docs/architecture.svg&output=png)
+
 ```mermaid
 flowchart TD
     A[Mock/On-chain Position Data] --> B[Health Factor Engine]
@@ -84,6 +87,3 @@ flowchart TD
 - DeFi tool-loop fix commit: https://github.com/mgnlia/riskpilot-m/commit/940597d023bf95d3a46216e634b6d6badfdc8183
 - Live demo URL: https://raw.githack.com/mgnlia/riskpilot-m/main/index.html
 - Submission checklist: [docs/submission-checklist.md](docs/submission-checklist.md)
-
-### Architecture PNG (judge-safe embed)
-![Architecture PNG](https://dummyimage.com/1200x680/ffffff/0f172a.png&text=RiskPilot-M+Architecture+Data->HF+Engine->Risk+Bands->UI%2FAI->Runbook)

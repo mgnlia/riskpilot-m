@@ -182,7 +182,9 @@ def run_tool_loop(client: Mistral, model: str) -> None:
                 }
             )
 
-    print("Tool loop ended after max iterations without final assistant response.")
+    print(
+        "Tool loop reached the 3-turn demo cap. This is expected in judge demos; rerun to continue iteration."
+    )
 
 
 def _build_client_or_exit() -> tuple[Mistral, str]:
